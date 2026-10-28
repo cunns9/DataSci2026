@@ -4,9 +4,16 @@ An ultrasonic obstacle detector for a toy RC construction truck, built on an ESP
 
 Part of my Mathematics for Data Science final project: AlexNet learns to recognize the lab's construction trucks, and later a computer drives them. This sensor is the first piece of hardware for the "computer drives a truck" stage.
 
-## Status
+## Status (2026-10-27)
 
-Sensor wiring and code. Not yet mounted on a truck.
+The board and code work. The first upload succeeded and the LED runs. The sensor doesn't fire yet because the board's 5V pin is off until the **IN-OUT** pads are soldered together. Details are in the [build log](build-log.md).
+
+**Pick up here:**
+1. Solder the IN-OUT pads (between pins 11 and 10) together.
+2. Unplug USB, then move the power wire from **3V3** back to **5V**.
+3. Move the GPIO 5 wire from **row 10** back to **row 14** (the divider's middle row). Echo at 5V straight into GPIO 5 can damage the board.
+4. Re-upload `truck_obstacle_sensor.ino`. The board currently has `echo_debug` on it.
+5. Test with a book: green → yellow → red.
 
 ## Parts
 
@@ -69,6 +76,8 @@ The distance also prints to the Serial Monitor at 115200 baud.
 4. Open Serial Monitor at 115200 and move a hand toward the sensor.
 
 ## Troubleshooting
+
+- **Always green / `echo_debug` says NO ECHO:** the sensor has no power. On this board, the 5V pin needs the IN-OUT pads bridged with solder. The HC-SR04 doesn't fire on 3.3V.
 
 - **LED doesn't light:** change `RGB_BUILTIN` from 48 to 38. The pin depends on the board version.
 - **`neopixelWrite` won't compile:** newer ESP32 board packages renamed it `rgbLedWrite`.
